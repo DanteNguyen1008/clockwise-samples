@@ -62,7 +62,7 @@ public class ClockwiseSampleMuseumWatchFace extends ConfigurableConnectedWatchFa
         /**
          * The design display size, in reference to which specs are created
          */
-        public static final float SPEC_SIZE = 320.0f;
+        public static final float SPEC_SIZE = 240.0f;
 
         /**
          * The diameter of the center circle

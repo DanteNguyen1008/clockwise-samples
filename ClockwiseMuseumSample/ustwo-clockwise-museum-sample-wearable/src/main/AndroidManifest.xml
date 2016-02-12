@@ -54,6 +54,34 @@
             </intent-filter>
         </service>
 
+        <service
+            android:name="com.ustwo.clockwise.sample.museum.MyClockWiseSample"
+            android:label="@string/my_clock_wise_watch"
+            android:allowEmbedded="true"
+            android:taskAffinity=""
+            android:enabled="true"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/watch_face" />
+            <meta-data
+                android:name="com.google.android.wearable.watchface.preview"
+                android:resource="@drawable/sample_preview_square" />
+            <meta-data
+                android:name="com.google.android.wearable.watchface.preview_circular"
+                android:resource="@drawable/sample_preview_round" />
+            <meta-data
+                android:name="com.google.android.wearable.watchface.companionConfigurationAction"
+                android:value="com.ustwo.clockwise.sample.config" />
+            <meta-data
+                android:name="com.google.android.wearable.watchface.wearableConfigurationAction"
+                android:value="com.ustwo.clockwise.sample.config" />
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+                <category android:name="com.google.android.wearable.watchface.category.WATCH_FACE" />
+            </intent-filter>
+        </service>
+
         <!-- Activity that receives all watch face configuration requests on the wearable -->
         <activity
             android:name="com.ustwo.clockwise.sample.config.WearableConfigActivity"
