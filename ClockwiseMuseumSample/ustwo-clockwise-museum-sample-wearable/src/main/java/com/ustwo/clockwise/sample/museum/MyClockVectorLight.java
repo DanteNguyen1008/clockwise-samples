@@ -1,6 +1,8 @@
 package com.ustwo.clockwise.sample.museum;
 
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -42,6 +44,12 @@ public class MyClockVectorLight extends ConfigurableConnectedWatchFace {
     private static final float CENTER_DOT_DIMENS = 10.0f;
 
     /**
+     * Bitmaps
+     */
+
+    private Bitmap bgBitmap;
+
+    /**
      * Colors
      */
 
@@ -65,7 +73,7 @@ public class MyClockVectorLight extends ConfigurableConnectedWatchFace {
 
     /**
      * Degrees at which hands will be drawn on the next draw cycle
-     * */
+     */
     private float currentDegreeHourHand = 0.0f;
     private float currentDegreeMinuteHand = 0.0f;
 
@@ -98,6 +106,8 @@ public class MyClockVectorLight extends ConfigurableConnectedWatchFace {
         this.hourHandPaint.setColor(this.hourHandColor);
         this.minuteHandPaint.setColor(this.minuteHandColor);
         this.textPaint.setColor(this.foreGroundColor);
+
+        this.bgBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.pantsu);
     }
 
     @Override
@@ -125,6 +135,7 @@ public class MyClockVectorLight extends ConfigurableConnectedWatchFace {
         this.minuteHandPaint.setStrokeWidth(this.minuteHandWidth);
 
         this.textPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        this.textPaint.setStrokeWidth(this.minuteHandWidth);
 
         updateHandPositions(getTime());
     }
@@ -137,9 +148,10 @@ public class MyClockVectorLight extends ConfigurableConnectedWatchFace {
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawColor(this.bgColor);
+        canvas.drawBitmap(this.bgBitmap, 0, 0, this.bitmapPaint);
 
-        drawHand(canvas,this.hourHandLong, this.hourHandPaint, this.currentDegreeHourHand);
-        drawHand(canvas,this.minuteHandLong, this.minuteHandPaint, this.currentDegreeMinuteHand);
+        drawHand(canvas, this.hourHandLong, this.hourHandPaint, this.currentDegreeHourHand);
+        drawHand(canvas, this.minuteHandLong, this.minuteHandPaint, this.currentDegreeMinuteHand);
 
         canvas.save();
         canvas.translate(this.watchFaceCenter.x, this.watchFaceCenter.y);
@@ -189,8 +201,8 @@ public class MyClockVectorLight extends ConfigurableConnectedWatchFace {
         for (int i = 1; i <= 12; i++) {
             canvas.save();
             float degree = TimeUtil.getHourDegrees(i);
-            canvas.rotate(degree, 0.0f , this.watchFaceCenter.y);
-            canvas.drawText(i+"", this.watchFaceCenter.x, this.watchFaceCenter.y + 100f, paint);
+            canvas.rotate(degree, this.watchFaceCenter.x, this.watchFaceCenter.y);
+            canvas.drawLine(this.watchFaceCenter.x, this.watchFaceCenter.y + 150f, this.watchFaceCenter.x, this.watchFaceCenter.y + 160f, paint);
             canvas.restore();
         }
     }
@@ -206,7 +218,7 @@ public class MyClockVectorLight extends ConfigurableConnectedWatchFace {
     private void refreshCurrentState() {
         WatchMode currentWatchMode = getCurrentWatchMode();
 
-        switch(currentWatchMode) {
+        switch (currentWatchMode) {
             case INTERACTIVE:
                 applyInteractiveState();
                 break;
