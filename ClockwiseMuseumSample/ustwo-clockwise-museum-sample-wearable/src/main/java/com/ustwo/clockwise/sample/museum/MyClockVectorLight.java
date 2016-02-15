@@ -91,23 +91,12 @@ public class MyClockVectorLight extends ConfigurableConnectedWatchFace {
     public void onCreate() {
         super.onCreate();
 
-        this.bgColor = NORMAL_BG_COLROR;
-        this.hourHandColor = NORMAL_HOUR_HAND_COLOR;
-        this.minuteHandColor = NORMAL_MINUTE_HAND_COLOR;
-        this.foreGroundColor = FORE_GROUND_COLOR;
-
         this.textPaint.setTypeface(Typeface.DEFAULT);
 
         this.bitmapPaint.setAntiAlias(true);
         this.hourHandPaint.setAntiAlias(true);
         this.minuteHandPaint.setAntiAlias(true);
         this.textPaint.setAntiAlias(true);
-
-        this.hourHandPaint.setColor(this.hourHandColor);
-        this.minuteHandPaint.setColor(this.minuteHandColor);
-        this.textPaint.setColor(this.foreGroundColor);
-
-        this.bgBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.pantsu);
     }
 
     @Override
@@ -137,7 +126,9 @@ public class MyClockVectorLight extends ConfigurableConnectedWatchFace {
         this.textPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         this.textPaint.setStrokeWidth(this.minuteHandWidth);
 
-        updateHandPositions(getTime());
+        /*update current state in the beginning*/
+        this.refreshCurrentState();
+        this.updateHandPositions(getTime());
     }
 
     @Override
@@ -148,7 +139,9 @@ public class MyClockVectorLight extends ConfigurableConnectedWatchFace {
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawColor(this.bgColor);
-        canvas.drawBitmap(this.bgBitmap, 0, 0, this.bitmapPaint);
+        if(this.bgBitmap != null) {
+            canvas.drawBitmap(this.bgBitmap, 0, 0, this.bitmapPaint);
+        }
 
         drawHand(canvas, this.hourHandLong, this.hourHandPaint, this.currentDegreeHourHand);
         drawHand(canvas, this.minuteHandLong, this.minuteHandPaint, this.currentDegreeMinuteHand);
@@ -234,13 +227,35 @@ public class MyClockVectorLight extends ConfigurableConnectedWatchFace {
     }
 
     private void applyLowBitState() {
+        this.bgColor = LOWBIT_BG_COLRO;
+        this.hourHandColor = LOWBIT_HOUR_HAND_COLOR;
+        this.minuteHandColor = LOWBIT_MINUTE_HAND_COLOR;
+        this.foreGroundColor = FORE_GROUND_COLOR;
 
+        this.hourHandPaint.setColor(this.hourHandColor);
+        this.minuteHandPaint.setColor(this.minuteHandColor);
+        this.textPaint.setColor(this.foreGroundColor);
     }
 
     private void applyAmbientState() {
+        this.bgColor = LOWBIT_BG_COLRO;
+        this.hourHandColor = LOWBIT_HOUR_HAND_COLOR;
+        this.minuteHandColor = LOWBIT_MINUTE_HAND_COLOR;
+        this.foreGroundColor = FORE_GROUND_COLOR;
 
+        this.hourHandPaint.setColor(this.hourHandColor);
+        this.minuteHandPaint.setColor(this.minuteHandColor);
+        this.textPaint.setColor(this.foreGroundColor);
     }
 
     private void applyInteractiveState() {
+        this.bgColor = NORMAL_BG_COLROR;
+        this.hourHandColor = NORMAL_HOUR_HAND_COLOR;
+        this.minuteHandColor = NORMAL_MINUTE_HAND_COLOR;
+        this.foreGroundColor = FORE_GROUND_COLOR;
+
+        this.hourHandPaint.setColor(this.hourHandColor);
+        this.minuteHandPaint.setColor(this.minuteHandColor);
+        this.textPaint.setColor(this.foreGroundColor);
     }
 }

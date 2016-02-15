@@ -5,4 +5,5 @@
     <string name="clockwise_sample_toggle_name">Light theme</string>
     <string name="my_clock_wise_watch">An Clock Wise Watch</string>
     <string name="my_simple_vector_clock">An Simple Vector Clock</string>
+    <string name="my_clock_bitmap_1">1 Clock Bitmap</string>
 </resources>
